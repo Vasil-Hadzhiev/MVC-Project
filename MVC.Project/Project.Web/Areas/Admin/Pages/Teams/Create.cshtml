@@ -1,0 +1,34 @@
+﻿@page
+@model Project.Web.Areas.Admin.Pages.Teams.CreateModel
+@{
+    ViewData["Title"] = "Create Team";
+}
+
+<h2>@ViewData["Title"]</h2>
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form method="post">
+                <hr />
+                @*<div asp-validation-summary="All" class="text-danger"></div>*@
+                <div class="form-group">
+                    <label asp-for="Model.Name"></label>
+                    <input asp-for="Model.Name" class="form-control" />
+                    <span asp-validation-for="Model.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model.LogoUrl"></label>
+                    <input asp-for="Model.LogoUrl" class="form-control" />
+                    <span asp-validation-for="Model.LogoUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

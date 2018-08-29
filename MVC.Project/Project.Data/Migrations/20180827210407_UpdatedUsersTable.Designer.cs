@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Data;
 
-namespace Project.Web.Data.Migrations
+namespace Project.Data.Migrations
 {
     [DbContext(typeof(SportsSystemContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180827210407_UpdatedUsersTable")]
+    partial class UpdatedUsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,8 +237,6 @@ namespace Project.Web.Data.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<int?>("FavouriteTeamId");
-
-                    b.Property<bool>("HasFavouriteTeam");
 
                     b.Property<bool>("LockoutEnabled");
 

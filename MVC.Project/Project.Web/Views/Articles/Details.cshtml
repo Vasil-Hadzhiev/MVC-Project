@@ -1,0 +1,27 @@
+﻿@using Project.Models.ViewModels
+@using Microsoft.Ajax.Utilities;
+@model ArticleDetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Article Title: @Model.Title</h1>
+<h3>Article by @Model.Author</h3>
+<hr />
+<h3>Content</h3>
+<p>
+    @Model.Content
+</p>
+
+@Html.ActionLink("Like", "Like", "Articles", new { id = Model.Id }, new
+{
+    data_ajax = "true",
+    data_ajax_method = "GET",
+    data_ajax_mode = "replace",
+    data_ajax_update = "#like",
+    @class = "btn btn-primary"
+})
+<div>
+    Likes: <span id="like">@Model.Likes</span>
+</div>

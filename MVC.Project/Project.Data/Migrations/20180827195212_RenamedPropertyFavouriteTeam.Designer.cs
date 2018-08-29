@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Data;
 
-namespace Project.Web.Data.Migrations
+namespace Project.Data.Migrations
 {
     [DbContext(typeof(SportsSystemContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180827195212_RenamedPropertyFavouriteTeam")]
+    partial class RenamedPropertyFavouriteTeam
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,9 +87,11 @@ namespace Project.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -118,9 +122,11 @@ namespace Project.Web.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value");
 
@@ -234,9 +240,7 @@ namespace Project.Web.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<int?>("FavouriteTeamId");
-
-                    b.Property<bool>("HasFavouriteTeam");
+                    b.Property<int>("FavouriteTeamId");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -362,7 +366,8 @@ namespace Project.Web.Data.Migrations
                 {
                     b.HasOne("Project.Models.EntityModels.Team", "FavouriteTeam")
                         .WithMany("Fans")
-                        .HasForeignKey("FavouriteTeamId");
+                        .HasForeignKey("FavouriteTeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Project.Models.EntityModels.UsersArticles", b =>

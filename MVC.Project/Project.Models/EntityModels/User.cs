@@ -10,14 +10,14 @@
         {
             this.ArticlesVoted = new List<UsersArticles>();
             this.Comments = new List<Comment>();
-        }
+        }      
 
         [Url]
         public string AvatarUrl { get; set; }
 
-        public int FavouriteTeamId { get; set; }
+        public Team FavouriteTeam { get; set; }
 
-        public Team FavouriteTeams { get; set; }
+        public bool HasFavouriteTeam { get; set; }
 
         public ICollection<UsersArticles> ArticlesVoted { get; set; }
 

@@ -1,0 +1,49 @@
+﻿@using Project.Models.ViewModels
+@model List<UsersViewModel>
+@{
+    ViewData["Title"] = "Users";
+}
+
+@if (Model.Any())
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Username</th>
+                @if (this.User.IsInRole("Administrator"))
+                {
+                    <th>Actions</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        @user.Username
+                    </td>
+                    @if (this.User.IsInRole("Administrator"))
+                    {
+                        <td>
+                            <form method="post">
+                                <a class="btn btn-info" asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@user.Id">
+                                    Details
+                                </a>
+                                <input type="submit" class="btn btn-danger"
+                                       asp-area="Admin"
+                                       asp-controller="Users"
+                                       asp-action="Delete"
+                                       asp-route-id="@user.Id" value="Delete" />
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>No other users currently are registered</h2>
+}
