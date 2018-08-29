@@ -31,6 +31,9 @@
 
         public string Category { get; set; }
 
+        [Required]
+        public string ImageUrl { get; set; }
+
         public ICollection<string> Categories { get; set; }
     }
 }

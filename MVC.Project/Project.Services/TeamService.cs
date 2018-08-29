@@ -52,6 +52,7 @@
                 {
                     Id = t.Id,
                     Name = t.Name,
+                    LogoUrl = t.LogoUrl,
                     FansCount = t.Fans.Count,
                     Fans = this.Context
                         .Users

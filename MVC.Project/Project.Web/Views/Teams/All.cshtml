@@ -13,6 +13,7 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Logo</th>
                 <th>Fans</th>
                 <th>Actions</th>
             </tr>
@@ -23,6 +24,9 @@
                 <tr>
                     <td>
                         @team.Name
+                    </td>
+                    <td>
+                        <img src="@team.LogoUrl" style="width:50px; height: 50px"/>
                     </td>
                     <td>
                         @team.FansCount

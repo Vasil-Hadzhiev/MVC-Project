@@ -16,6 +16,8 @@
 
         public int FansCount{ get; set; }
 
+        public string LogoUrl { get; set; }
+
         public bool HasFavouriteTeam { get; set; }
 
         public ICollection<User> Fans { get; set; }

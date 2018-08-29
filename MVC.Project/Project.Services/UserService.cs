@@ -1,6 +1,7 @@
 ﻿namespace Project.Services
 {
     using Interfaces;
+    using Microsoft.EntityFrameworkCore;
     using Project.Data;
     using Project.Models.ViewModels;
     using System.Collections.Generic;
@@ -21,7 +22,8 @@
                 .Select(u => new UsersViewModel
                 {
                     Id = u.Id,
-                    Username = u.UserName
+                    Username = u.UserName,
+                    AvatarUrl = u.AvatarUrl
                 })
                 .ToList();
 
@@ -43,6 +45,27 @@
             this.Context.SaveChanges();
 
             return true;
+        }
+
+        public UserDetailsViewModel Details(string id)
+        {
+            var user = this.Context
+                .Users
+                .FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var userModel = new UserDetailsViewModel
+            {
+                Id = id,
+                Username = user.UserName,
+                AvatarUrl = user.AvatarUrl
+            };
+
+            return userModel;
         }
     }
 }

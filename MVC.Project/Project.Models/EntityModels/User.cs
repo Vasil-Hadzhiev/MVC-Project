@@ -9,7 +9,6 @@
         public User()
         {
             this.ArticlesVoted = new List<UsersArticles>();
-            this.Comments = new List<Comment>();
         }      
 
         [Url]
@@ -20,7 +19,5 @@
         public bool HasFavouriteTeam { get; set; }
 
         public ICollection<UsersArticles> ArticlesVoted { get; set; }
-
-        public ICollection<Comment> Comments { get; set; }
     }
 }

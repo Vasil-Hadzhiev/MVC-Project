@@ -8,5 +8,7 @@
         List<UsersViewModel> GetUsers();
 
         bool Delete(string id);
+
+        UserDetailsViewModel Details(string id);
     }
 }

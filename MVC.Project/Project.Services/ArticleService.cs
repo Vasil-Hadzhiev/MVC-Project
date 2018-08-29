@@ -26,7 +26,7 @@
             return categories;
         }
 
-        public Article Create(string title, string content, string category, string authorId)
+        public Article Create(string title, string content, string category, string authorId, string url)
         {
             var articleExists = this.Context
                 .Articles
@@ -42,10 +42,10 @@
                 Title = title,
                 Content = content,
                 AuthorId = authorId,
+                ImageUrl = url,
                 CreatedOn = DateTime.UtcNow,
                 CategoryId = this.Context.Categories.First(c => c.Name == category).Id,
-                Likes = 0,
-                Dislikes = 0
+                Upvotes = 0
             };
 
             this.Context.Articles.Add(article);
@@ -113,13 +113,14 @@
                 Title = article.Title,
                 Category = categoryName,
                 Content = article.Content,
-                Categories = categories
+                Categories = categories,
+                ImageUrl = article.ImageUrl
             };
 
             return model;
         }
 
-        public void Edit(int id, string title, string content, string category)
+        public void Edit(int id, string title, string content, string category, string url)
         {
             var article = this.Context
                 .Articles
@@ -133,11 +134,12 @@
             article.Title = title;
             article.Content = content;
             article.CategoryId = categoryId;
+            article.ImageUrl = url;
 
             this.Context.SaveChanges();
         }
 
-        public ArticleDetailsViewModel GetDetails(int id)
+        public ArticleDetailsViewModel GetDetails(int id, string userId)
         {
             var article = this.Context
                 .Articles
@@ -152,6 +154,10 @@
                 .Users
                 .FirstOrDefault(u => u.Id == article.AuthorId);
 
+            var hasVoted = this.Context
+                .UsersArticles
+                .Any(ua => ua.ArticleId == article.Id && ua.UserId == userId);
+
             var articleModel = new ArticleDetailsViewModel
             {
                 Id = article.Id,
@@ -159,23 +165,52 @@
                 Content = article.Content,
                 Author = author.UserName,
                 CreatedOn = article.CreatedOn,
-                Likes = article.Likes,
-                Dislikes = article.Dislikes
+                Upvotes = article.Upvotes,
+                ImageUrl = article.ImageUrl,
+                HasVoted = hasVoted
             };
 
             return articleModel;
         }
 
-        public int Like(int id)
+        public int Upvote(int id, string userId)
         {
             var article = this.Context
                 .Articles
                 .FirstOrDefault(a => a.Id == id);
 
-            article.Likes++;
-            this.Context.SaveChanges();
+            article.Upvotes++;
 
-            return article.Likes;
+            var usersArticles = new UsersArticles
+            {
+                UserId = userId,
+                ArticleId = article.Id
+            };
+
+            if (!this.Context.UsersArticles.Any(ua => ua.ArticleId == article.Id && ua.UserId == userId))
+            {
+                this.Context.UsersArticles.Add(usersArticles);
+                this.Context.SaveChanges();
+            }
+
+            return article.Upvotes;
+        }
+
+        public List<IndexViewModel> TopArticles()
+        {
+            var articles = this.Context
+                .Articles
+                .OrderByDescending(a => a.Upvotes)
+                .Take(3)
+                .Select(a => new IndexViewModel
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    ImageUrl = a.ImageUrl
+                })
+                .ToList();
+
+            return articles;
         }
     }
 }

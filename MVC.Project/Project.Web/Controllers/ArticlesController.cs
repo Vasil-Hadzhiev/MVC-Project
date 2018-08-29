@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Project.Services.Interfaces;
+    using System.Security.Claims;
 
     public class ArticlesController : Controller
     {
@@ -20,7 +21,7 @@
 
         public IActionResult Details(int id)
         {
-            var article = this.articles.GetDetails(id);
+            var article = this.articles.GetDetails(id, this.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             if (article == null)
             {
@@ -30,9 +31,9 @@
             return this.View(article);
         }
 
-        public int Like(int id)
+        public int Upvote(int id)
         {
-            int value = this.articles.Like(id);
+            int value = this.articles.Upvote(id, this.User.FindFirstValue(ClaimTypes.NameIdentifier));
             return value;
         }
     }

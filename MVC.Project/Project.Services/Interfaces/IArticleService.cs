@@ -9,18 +9,20 @@
     {
         List<string> PrepareCategories();
 
-        Article Create(string title, string content, string category, string authorId);
+        Article Create(string title, string content, string category, string authorId, string url);
 
         bool Delete(int id);
 
-        void Edit(int id, string title, string content, string category);
+        void Edit(int id, string title, string content, string category, string url);
 
-        int Like(int id);
+        int Upvote(int id, string userId);
 
-        ArticleDetailsViewModel GetDetails(int id);
+        ArticleDetailsViewModel GetDetails(int id, string userId);
 
         List<ArticlesViewModel> GetArticles();
 
         EditArticleBindingModel GetEditModel(int id);
+
+        List<IndexViewModel> TopArticles();
     }
 }

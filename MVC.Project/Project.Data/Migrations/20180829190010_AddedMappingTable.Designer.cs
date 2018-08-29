@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Data;
 
-namespace Project.Web.Data.Migrations
+namespace Project.Data.Migrations
 {
     [DbContext(typeof(SportsSystemContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180829190010_AddedMappingTable")]
+    partial class AddedMappingTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,13 +147,12 @@ namespace Project.Web.Data.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired();
+                    b.Property<int>("Dislikes");
+
+                    b.Property<int>("Likes");
 
                     b.Property<string>("Title")
                         .IsRequired();
-
-                    b.Property<int>("Upvotes");
 
                     b.HasKey("Id");
 
@@ -174,6 +175,30 @@ namespace Project.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Project.Models.EntityModels.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArticleId");
+
+                    b.Property<string>("Content")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Project.Models.EntityModels.Team", b =>
@@ -213,7 +238,11 @@ namespace Project.Web.Data.Migrations
 
                     b.Property<int?>("FavouriteTeamId");
 
+                    b.Property<bool>("HasDisliked");
+
                     b.Property<bool>("HasFavouriteTeam");
+
+                    b.Property<bool>("HasLiked");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -321,6 +350,18 @@ namespace Project.Web.Data.Migrations
                         .WithMany("Articles")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Project.Models.EntityModels.Comment", b =>
+                {
+                    b.HasOne("Project.Models.EntityModels.Article", "Article")
+                        .WithMany("Comments")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Project.Models.EntityModels.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Project.Models.EntityModels.User", b =>

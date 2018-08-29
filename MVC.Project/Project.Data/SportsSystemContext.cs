@@ -10,8 +10,6 @@
 
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<Comment> Comments { get; set; }
-
         public DbSet<Team> Teams { get; set; }
 
         public DbSet<UsersArticles> UsersArticles { get; set; }

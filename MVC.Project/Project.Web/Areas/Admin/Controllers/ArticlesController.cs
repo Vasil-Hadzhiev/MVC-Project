@@ -47,7 +47,7 @@ namespace Project.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EditArticleBindingModel model)
         {
-            this.articles.Edit(model.Id, model.Title, model.Content, model.Category);
+            this.articles.Edit(model.Id, model.Title, model.Content, model.Category, model.ImageUrl);
 
             return this.RedirectToAction("All", "Articles", new { area = "" });
         }

@@ -9,12 +9,18 @@
     <div class="col-md-4">
         <section>
             <form method="post">
+                @Html.AntiForgeryToken()
                 <hr />
                 @*<div asp-validation-summary="All" class="text-danger"></div>*@
                 <div class="form-group">
                     <label asp-for="Model.Title"></label>
                     <input asp-for="Model.Title" class="form-control" />
                     <span asp-validation-for="Model.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model.ImageUrl"></label>
+                    <input asp-for="Model.ImageUrl" class="form-control" />
+                    <span asp-validation-for="Model.ImageUrl" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Model.Content"></label>

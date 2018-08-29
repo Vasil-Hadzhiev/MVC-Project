@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Data;
 
-namespace Project.Web.Data.Migrations
+namespace Project.Data.Migrations
 {
     [DbContext(typeof(SportsSystemContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180829213533_RemovedComments")]
+    partial class RemovedComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,9 +147,6 @@ namespace Project.Web.Data.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired();
-
                     b.Property<string>("Title")
                         .IsRequired();
 
@@ -211,7 +210,7 @@ namespace Project.Web.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<int?>("FavouriteTeamId");
+                    b.Property<int>("FavouriteTeamId");
 
                     b.Property<bool>("HasFavouriteTeam");
 
@@ -327,7 +326,8 @@ namespace Project.Web.Data.Migrations
                 {
                     b.HasOne("Project.Models.EntityModels.Team", "FavouriteTeam")
                         .WithMany("Fans")
-                        .HasForeignKey("FavouriteTeamId");
+                        .HasForeignKey("FavouriteTeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Project.Models.EntityModels.UsersArticles", b =>

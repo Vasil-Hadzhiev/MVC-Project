@@ -14,8 +14,10 @@
 
         public DateTime CreatedOn { get; set; }
 
-        public int Likes { get; set; }
+        public int Upvotes { get; set; }
 
-        public int Dislikes { get; set; }
+        public bool HasVoted { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }

@@ -1,11 +1,14 @@
 namespace Project.Web.Areas.Admin.Pages.Articles
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Project.Models.BindingModels;
     using Project.Services.Interfaces;
     using System.Security.Claims;
 
+    [Area("Admin")]
+    [Authorize(Roles = "Administrator")]
     public class CreateModel : PageModel
     {
         private readonly IArticleService articles;
@@ -25,6 +28,7 @@ namespace Project.Web.Areas.Admin.Pages.Articles
             this.RedirectToPage(this.Model);
         }
 
+        [ValidateAntiForgeryToken]
         public IActionResult OnPost()
         {
             if (!this.ModelState.IsValid)
@@ -36,7 +40,8 @@ namespace Project.Web.Areas.Admin.Pages.Articles
                     this.Model.Title, 
                     this.Model.Content, 
                     this.Model.Category, 
-                    this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    this.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                    this.Model.ImageUrl);
 
             if (article == null)
             {

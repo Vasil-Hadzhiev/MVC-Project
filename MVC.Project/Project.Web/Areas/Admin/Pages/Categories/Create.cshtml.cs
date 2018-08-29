@@ -1,11 +1,14 @@
 namespace Project.Web.Areas.Admin.Pages.Categories
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Project.Data;
     using Project.Models.BindingModels;
     using Project.Services.Interfaces;
 
+    [Area("Admin")]
+    [Authorize(Roles = "Administrator")]
     public class CreateModel : PageModel
     {
         private readonly ICategoryService categories;

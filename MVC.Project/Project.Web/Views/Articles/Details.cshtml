@@ -1,27 +1,43 @@
 ﻿@using Project.Models.ViewModels
-@using Microsoft.Ajax.Utilities;
 @model ArticleDetailsViewModel
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Article Title: @Model.Title</h1>
-<h3>Article by @Model.Author</h3>
+<h1>@Model.Title - Article by @Model.Author</h1> <h3>created on <i>@Model.CreatedOn</i></h3>
+<img src="@Model.ImageUrl" width="500" height="300"/>
 <hr />
-<h3>Content</h3>
 <p>
     @Model.Content
 </p>
-
-@Html.ActionLink("Like", "Like", "Articles", new { id = Model.Id }, new
+@if (!Model.HasVoted)
 {
-    data_ajax = "true",
-    data_ajax_method = "GET",
-    data_ajax_mode = "replace",
-    data_ajax_update = "#like",
-    @class = "btn btn-primary"
-})
+    <div>
+        @Html.ActionLink("Upvote", "Upvote", "Articles", new { id = Model.Id }, new
+    {
+        data_ajax = "true",
+        data_ajax_method = "GET",
+        data_ajax_mode = "replace",
+        data_ajax_update = "#upvote",
+        @class = "btn btn-primary upvoteButton",
+        style = "width: 80px;"
+    })
+    </div>
+} else
+{
+    <h3>You have already upvoted this article</h3>
+}
+
 <div>
-    Likes: <span id="like">@Model.Likes</span>
+    Upvotes: <span id="upvote">@Model.Upvotes</span>
 </div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(".upvoteButton").click(function () {
+        $(".upvoteButton").hide()
+    })
+</script>
+
+

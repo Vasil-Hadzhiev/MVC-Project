@@ -9,11 +9,10 @@
         public Article()
         {
             this.UsersVoted = new List<UsersArticles>();
-            this.Comments = new List<Comment>();
         }
 
         public int Id { get; set; }
-
+        
         [Required]
         [MinLength(3)]
         public string Title { get; set; }
@@ -33,12 +32,11 @@
 
         public int CategoryId { get; set; }
 
-        public int Likes { get; set; }
+        public int Upvotes { get; set; }
 
-        public int Dislikes { get; set; }
+        [Required]
+        public string ImageUrl { get; set; }
 
         public ICollection<UsersArticles> UsersVoted { get; set; }
-
-        public ICollection<Comment> Comments { get; set; }
     }
 }
