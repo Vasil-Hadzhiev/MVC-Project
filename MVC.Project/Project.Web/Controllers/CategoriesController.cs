@@ -1,8 +1,10 @@
 ﻿namespace Project.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Project.Services.Interfaces;
 
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly ICategoryService categories;

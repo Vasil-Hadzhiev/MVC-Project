@@ -1,0 +1,22 @@
+﻿@using Project.Models.ViewModels
+@using X.PagedList;
+@using X.PagedList.Mvc;
+@model List<VideosViewModel>
+@{
+    ViewData["Title"] = "All";
+}
+
+<br />
+<a class="btn btn-primary" asp-area="" asp-page="/Videos/Create">Add Video</a>
+@foreach (var video in Model)
+    {
+        <div>
+            <h3>@video.Title</h3>
+            <iframe width="560" height="315"
+                    src="https://www.youtube.com/embed/@video.VideoUrl"
+                    frameborder="0" allow="autoplay; encrypted-media"
+                    allowfullscreen></iframe>
+        </div>
+        <br />
+    }
+@*@Html.PagedListPager(Model, page => Url.Action("All", new { page }));*@

@@ -45,6 +45,8 @@
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IVideoService, VideoService>();
+
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -93,6 +95,7 @@
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
             });
         }
     }

@@ -12,6 +12,8 @@
 
         public DbSet<Team> Teams { get; set; }
 
+        public DbSet<Video> Videos { get; set; }
+
         public DbSet<UsersArticles> UsersArticles { get; set; }
 
         public SportsSystemContext(DbContextOptions<SportsSystemContext> options)

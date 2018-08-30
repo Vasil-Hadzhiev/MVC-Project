@@ -1,8 +1,11 @@
 ﻿namespace Project.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Project.Services.Interfaces;
+    using Project.Web.Common;
 
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly IUserService users;
@@ -17,7 +20,8 @@
             var user = this.users.Details(id);
             if (user == null)
             {
-                return this.RedirectToAction("Index", "Home", new { area = "" });
+                this.Response.StatusCode = 404;
+                return new NotFoundViewResult("CustomNotFound");
             }
 
             return this.View(user);

@@ -1,9 +1,13 @@
 ﻿namespace Project.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Project.Services.Interfaces;
+    using Project.Web.Common;
     using System.Security.Claims;
+    using X.PagedList;
 
+    [Authorize]
     public class ArticlesController : Controller
     {
         private readonly IArticleService articles;
@@ -13,7 +17,7 @@
             this.articles = articles;
         }
 
-        public IActionResult All()
+        public IActionResult All(int? page)
         {
             var articles = this.articles.GetArticles();
             return this.View(articles);
@@ -25,7 +29,8 @@
 
             if (article == null)
             {
-                return this.RedirectToAction("All", "Articles", new { area = "" });
+                this.Response.StatusCode = 404;
+                return new NotFoundViewResult("CustomNotFound");
             }
 
             return this.View(article);

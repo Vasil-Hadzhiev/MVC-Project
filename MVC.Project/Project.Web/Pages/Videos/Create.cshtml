@@ -1,10 +1,9 @@
 ﻿@page
-@model Project.Web.Areas.Admin.Pages.Categories.CreateModel
+@model Project.Web.Pages.Videos.CreateModel
 @{
-    ViewData["Title"] = "Create Category";
+    ViewData["Title"] = "Create";
 }
 
-<h2>@ViewData["Title"]</h2>
 <div class="row">
     <div class="col-md-4">
         <section>
@@ -13,9 +12,14 @@
                 <hr />
                 @*<div asp-validation-summary="All" class="text-danger"></div>*@
                 <div class="form-group">
-                    <label asp-for="Model.Name"></label>
-                    <input asp-for="Model.Name" class="form-control" />
-                    <span asp-validation-for="Model.Name" class="text-danger"></span>
+                    <label asp-for="Model.Title"></label>
+                    <input asp-for="Model.Title" class="form-control" />
+                    <span asp-validation-for="Model.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model.VideoUrl"></label>
+                    <input asp-for="Model.VideoUrl" class="form-control" />
+                    <span asp-validation-for="Model.VideoUrl" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Create</button>

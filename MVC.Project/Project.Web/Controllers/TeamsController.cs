@@ -5,6 +5,7 @@
     using Project.Services.Interfaces;
     using System.Security.Claims;
 
+    [Authorize]
     public class TeamsController : Controller
     {
         private readonly ITeamService teams;
@@ -14,7 +15,6 @@
             this.teams = teams;
         }
 
-        [Authorize]
         public IActionResult All()
         {
             var teams = this.teams.GetTeams(this.User.FindFirstValue(ClaimTypes.NameIdentifier));

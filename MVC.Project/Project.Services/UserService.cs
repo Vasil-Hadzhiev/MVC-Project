@@ -1,7 +1,6 @@
 ﻿namespace Project.Services
 {
     using Interfaces;
-    using Microsoft.EntityFrameworkCore;
     using Project.Data;
     using Project.Models.ViewModels;
     using System.Collections.Generic;
